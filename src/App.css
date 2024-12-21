@@ -1,0 +1,8 @@
+
+.login-container{
+  background: linear-gradient(to right, rgba(254,175,0,9) ,rgba(254,175,0,4));
+}
+.sidebar-container{
+  background-color: bisque;
+  overflow-y: hidden;
+}
