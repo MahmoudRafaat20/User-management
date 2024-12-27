@@ -15,11 +15,10 @@ const UsersList = () => {
     let [Users, setusers] = useState([])
     const [show, setShow] = useState(false);
     let navigate = useNavigate()
-    
 
     const handleClose = () => setShow(false);
     const handleShow = (user) => {
-        setShow(true)
+        setShow(true);
         setUserId(user.id)
         setUserData(user)
     }
@@ -31,18 +30,6 @@ const UsersList = () => {
             console.log(error);
         }
     };
-    let UpdateUsers =()=>{
-        try {
-            let response=axios.put(`https://dummyjson.com/users ${user.id}`)
-            setData(response?.data?.users)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    useEffect(()=>{
-        UpdateUsers()
-    })
 
     let deleteUsers = () => {
         try {
@@ -57,9 +44,12 @@ const UsersList = () => {
     let navigateToAddUser = () => {
         navigate("/dashboard/add-user")
     }
+    let navigateToUpdateUser = (User:any) => {
+        navigate("/dashboard/add-user", {state:{User,isUpdate:true}})
+    }
     useEffect(() => {
         getUsers()
-    })
+    },[])
 
     return (
         <div>
@@ -92,7 +82,7 @@ const UsersList = () => {
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
                             <td>{user.birthDate}</td>
-                            <td><CiEdit onClick={()=>UpdateUsers()} className="text-warning" size={30} /> <MdDelete onClick={() => handleShow(user)} className="text-warning mx-1" size={30} /></td>
+                            <td><CiEdit className="text-warning" size={30} onClick={()=>navigateToUpdateUser(user)}/> <MdDelete onClick={() => handleShow(user)} className="text-warning mx-1" size={30} /></td>
 
                         </tr>
                     ))}
