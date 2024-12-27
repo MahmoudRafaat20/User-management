@@ -1,30 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate,} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 const AddUser = () => {
-    let{register,handleSubmit,formState:{errors}}=useForm()
-    let navigate=useNavigate()
-    const[data,setData]=useState([])
-    
-    let onSubmit=async(data)=>{
-         try {
-            let response=await axios.post("https://dummyjson.com/users/add",data)
+   
+    let { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [data, setData] = useState([]);
+    let navigate = useNavigate();
+    let {state} =useLocation(); 
+    let { User, isUpdate }= state || {}
+    let onSubmit = async () => {
+        try {
+            let response = await axios.post("https://dummyjson.com/users/add", data)
             console.log(response);
             toast.success("added successfully")
             navigate("/dashboard/users-list")
-            
-         } catch (error) {
+
+        } catch (error) {
             console.log(error);
-            toast.error("failed to delete")
-         }
+            toast.error("failed to add")
+        }
     }
-    
-    let UpdateUsers =()=>{
+
+    let UpdateUsers = () => {
         try {
-            let response=axios.put(`https://dummyjson.com/users ${user.id}`)
+            let response = axios.put(`https://dummyjson.com/users/${user.id}`)
             setData(response?.data?.users)
             toast.success("updated successfully")
         } catch (error) {
@@ -32,49 +35,64 @@ const AddUser = () => {
             toast.error("failed to update")
         }
     }
-    useEffect(()=>{
-        UpdateUsers()
-    })
+    useEffect( () => {
+        if (User && isUpdate) {
+            setValue("firstName", User.firstName)
+            setValue("lastName",User.lastName)
+            setValue("email",User.email)
+            setValue("phone",User.phone)
+            setValue("age",User.age)
+            setValue("birthDate",User.birthDate)
+        }
+        if(!isUpdate){
+            setValue("firstName", "")
+            setValue("lastName","" )
+            setValue("email","" )
+            setValue("phone","" )
+            setValue("age", "")
+            setValue("birthDate", "")
+        }
+    },[isUpdate,User])
     return (
         <>
             <div className="mx-3">
-                <h3>Add User</h3>
+                <h3>{isUpdate?"Update user":"Add user"}</h3>
             </div>
             <hr />
-            <form onSubmit={handleSubmit(onSubmit)}className="shadow-lg p-3 m-5 rounded">
+            <form onSubmit={handleSubmit(onSubmit)} className="shadow-lg p-3 m-5 rounded">
                 <div className="row">
                     <div className="col-md-6">
-                        <label>First Name</label>
-                        <input type="text" className="form-control my-2" placeholder="Enter your First Name" {...register("firstName", { required: "First Name is required" })} value={user.firstName}/>
-                        {errors.firstName && <span className="text-danger">{errors.firstName.message}</span>}
+                        <label> First Name </label>
+                        <input type="text" className="form-control my-2" placeholder="Enter your First Name" {...register("firstName", { required: "First Name is required" })}  />
+                        {errors.firstName && <span className="text-danger">{errors.firstName.message} </span>}
                     </div>
                     <div className="col-md-6">
                         <label>Last Name</label>
-                        <input type="text" className="form-control my-2" placeholder="Enter your Last Name" {...register("lastName", { required: "lastName is required" })} value={user.lastName}/>
-                        {errors.lastName && <span className="text-danger">{errors.lastName.message}</span>}
+                        <input type="text" className="form-control my-2" placeholder="Enter your Last Name" {...register("lastName", { required: "lastName is required" })} />
+                        {errors.lastName && <span className="text-danger">{errors.lastName.message} </span>}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-6">
                         <label>Email</label>
-                        <input type="email" className="form-control my-2" placeholder="Enter your Email" {...register("email", { required: "email is required" })} value={user.email}/>
+                        <input type="email" className="form-control my-2" placeholder="Enter your Email" {...register("email", { required: "email is required" })} />
                         {errors.email && <span className="text-danger">{errors.email.message}</span>}
                     </div>
                     <div className="col-md-6">
                         <label>Age</label>
-                        <input type="number" className="form-control my-2" placeholder="Enter your Age" {...register("age", { required: "age is required" })} value={user.age}/>
+                        <input type="number" className="form-control my-2" placeholder="Enter your Age" {...register("age", { required: "age is required" })} />
                         {errors.age && <span className="text-danger">{errors.age.message}</span>}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-6">
                         <label>Phone Number</label>
-                        <input type="number" className="form-control my-2" placeholder="Enter your Phone Number" {...register("phone", { required: "phone is required" })} value={user.phone}/>
+                        <input type="number" className="form-control my-2" placeholder="Enter your Phone Number" {...register("phone", { required: "phone is required" })} />
                         {errors.phone && <span className="text-danger">{errors.phone.message}</span>}
                     </div>
                     <div className="col-md-6">
                         <label>Birth Date</label>
-                        <input type="date" className="form-control my-2" placeholder="Enter your Birth Date" {...register("birthDate", { required: "birthDate is required" })} value={user.birthDate}/>
+                        <input type="date" className="form-control my-2" placeholder="Enter your Birth Date" {...register("birthDate", { required: "birthDate is required" })} />
                         {errors.birthDate && <span className="text-danger">{errors.birthDate.message}</span>}
                     </div>
                 </div>
