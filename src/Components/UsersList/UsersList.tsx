@@ -42,10 +42,10 @@ const UsersList = () => {
         }
     }
     let navigateToAddUser = () => {
-        navigate("/dashboard/add-user")
+        navigate("/dashboard/users-data")
     }
     let navigateToUpdateUser = (User:any) => {
-        navigate("/dashboard/add-user", {state:{User,isUpdate:true}})
+        navigate("/dashboard/users-data", {state:{User,isUpdate:true}})
     }
     useEffect(() => {
         getUsers()
