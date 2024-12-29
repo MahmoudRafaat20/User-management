@@ -24,7 +24,7 @@ const SideBar = () => {
                 <Menu>
                     <MenuItem icon={<FaHome />} component={<Link to="/dashboard" />}> Home</MenuItem>
                     <MenuItem icon={<FaUsers/> } component={<Link to="/dashboard/users-list" />}>Users</MenuItem>
-                    <MenuItem icon={<HiUserAdd/>} component={<Link to="/dashboard/add-user" />}>Add users</MenuItem>
+                    <MenuItem icon={<HiUserAdd/>} component={<Link to="/dashboard/users-data" />}>Add users</MenuItem>
                     <MenuItem icon={<CgProfile/> } component={<Link to="/dashboard/profile" />}>Profile</MenuItem>
                     <MenuItem icon={<CiLogout/> } component={<Link to=""/>}>Log out</MenuItem>
                 </Menu>
