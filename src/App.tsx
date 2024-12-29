@@ -7,7 +7,7 @@ import AuthLayout from './Components/AuthLayout/AuthLayout'
 import MasterLayout from './Components/MasterLayout/MasterLayout'
 import Home from './Components/Home/Home'
 import UsersList from './Components/UsersList/UsersList'
-import AddUser from './Components/AddUser/AddUser'
+import UsersData from './Components/UsersData/UsersData'
 import Profile from './Components/Profile/Profile'
 import { ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
