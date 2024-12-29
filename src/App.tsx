@@ -29,7 +29,7 @@ function App() {
       { index: true, element: <Home/>},
       { path:"home", element:<Home/>},
       { path:"users-list", element:<UsersList/> },
-      { path:"add-user", element:<AddUser/> },
+      { path:"users-data", element:<UsersData/> },
       { path:"profile", element:<Profile/> },
     ]
   }
